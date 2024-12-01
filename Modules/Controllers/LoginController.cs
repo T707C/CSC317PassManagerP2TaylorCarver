@@ -14,7 +14,7 @@ namespace CSC317PassManagerP2Starter.Modules.Controllers
         /*
          * This class is incomplete.  Fill in the method definitions below.
          */
-        private User _user = new User();
+        private User _user = new User("John", "Doe", "test", "ab1234");
         private bool _loggedIn = false;
 
         // Constructor for test user
