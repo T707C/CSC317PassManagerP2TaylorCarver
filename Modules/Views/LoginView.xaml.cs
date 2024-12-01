@@ -12,8 +12,8 @@ public partial class LoginView : ContentPage
     {
         //Complete Process Login Functionality.  Called by Submit Button
 
-        string username = entryUsername.Text?.Trim() ?? string.Empty;
-        string password = entryPassword.Text ?? string.Empty;
+        string username = txtUserName.Text?.Trim() ?? string.Empty;
+        string password = txtPassword.Text ?? string.Empty;
 
         // Authenticator
 
@@ -42,7 +42,7 @@ public partial class LoginView : ContentPage
     {
         //Complete ShowError Message functionality.  Supports ProcessLogin.
 
-        labelErrorMessage.Text = message;
-        labelErrorMessage.IsVisible = true;
+        lblError.Text = message;
+        lblError.IsVisible = true;
     }
 }
