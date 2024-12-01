@@ -21,6 +21,7 @@ namespace CSC317PassManagerP2Starter.Modules.Views
         private bool _isVisible = false;
         private bool _editing = false;
 
+        // Constructor
         public PasswordRow(PasswordModel source)
         {
             _pass = source;
@@ -28,41 +29,44 @@ namespace CSC317PassManagerP2Starter.Modules.Views
 
         //Create your Binding Properties here, which should reflect the front-end bindings.
         //See the example of "Platform" below.
-        public string Platform
+        public string PlatformName
         {
-            get
-            {
-                //complete getter for Platform.  currenly returns an empty string. 
-                return "";
-            }
+            get => _pass.PlatformName;
+     
             set
             {
                 //complete setter for Platform.
-
-                //This needs to be called for updating the binding when
-                //the platform name is edited.  Leave here.
+                // This needs to be called for updating the binding when the platform name is edited.  Leave here.
+                _pass.PlatformName = value;
                 RefreshRow();
             }
         }
 
-        public string PlatformUserName
+        /*public string PlatformUserName (not sure that I need this)
         {
-            get
-            {
-                //Complete getter for User Name.
-                return "";
-            }
+            get => _pass.PlatformUserName;
+           
             set
             {
                 //complete setter for User Name.
+
+                _pass.PlatformUserName = value;
                 RefreshRow();
             }
-        }
+        } */
 
         public string PlatformPassword
         {
-            get
+            get => _isVisible ? _pass.GetPassword() : "<hidden>";
+            set
             {
+                if (_isVisible)
+                {
+                    _pass.SetPassword(value);
+                    RefreshRow();
+                }
+            }
+            /*{
                //complete getter for Password.  Currenly returns "hidden."
                //This should return the actual password is the Show toggle
                //is true.
@@ -78,23 +82,30 @@ namespace CSC317PassManagerP2Starter.Modules.Views
 
 
                 RefreshRow();
-            }
+            }*/
         }
 
-        public int PasswordID
-        {
-            get
+        public int PasswordID => _pass.ID; // read only
+       
+        /*{
+            get 
             {
                 //complete getter for the pass ID.  Is binded to the edit/save/copy/delete buttons.
                 //currently returns -1;
                 return -1;
             }
-        }
+        }*/
 
         public bool IsShown
         {
-            get
+            get => _isVisible;
+            set
             {
+                _isVisible = value;
+                RefreshRow();
+            }
+
+           /* {
                 //complete getter for IsShown, which is binded to the Show Password
                 //toggle/switch.
                 return false;
@@ -103,13 +114,19 @@ namespace CSC317PassManagerP2Starter.Modules.Views
             {
                 //complete setter for IsShown.
                 RefreshRow();
-            }
+            }*/
         }
 
         public bool Editing
         {
-            get
+            get => _editing;
+            set
             {
+                _editing = value;
+                RefreshRow();
+            }
+
+            /* {
                 //Complete getter for Editing, which is toggled when the "edit/save" button
                 //is clicked.  
                 return false;
@@ -118,7 +135,8 @@ namespace CSC317PassManagerP2Starter.Modules.Views
             {
                 //Complete setter for Editing.
                 RefreshRow();
-            }
+            }*/
+
         }
 
 
@@ -126,8 +144,8 @@ namespace CSC317PassManagerP2Starter.Modules.Views
         //front-end to update the collection view.
         private void RefreshRow()
         {
-            OnPropertyChanged(nameof(Platform));
-            OnPropertyChanged(nameof(PlatformUserName));
+            OnPropertyChanged(nameof(PlatformName));
+           // OnPropertyChanged(nameof(PlatformUserName)); // seemingly redundant //
             OnPropertyChanged(nameof(PlatformPassword));
             OnPropertyChanged(nameof(IsShown));
             OnPropertyChanged(nameof(Editing));
@@ -137,6 +155,8 @@ namespace CSC317PassManagerP2Starter.Modules.Views
         {
             //Is called when the "save" button is clicked.  Saves the changes to the
             //password to the model data.
+
+            App.PasswordController.UpdatePassword(_pass);
         }
     }
 
