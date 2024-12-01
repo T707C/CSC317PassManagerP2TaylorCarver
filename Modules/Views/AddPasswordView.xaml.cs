@@ -27,30 +27,32 @@ public partial class AddPasswordView : ContentPage
         //Called when the Submit button is clicked for a password manually
         //entered.  (i.e., existing password).
 
-        if (string.IsNullOrWhiteSpace(entryPlatformName.Text) ||
-            string.IsNullOrWhiteSpace(entryPlatformUsername.Text) ||
-            string.IsNullOrWhiteSpace(entryPassword.Text))
+        if (string.IsNullOrWhiteSpace(txtNewPlatform.Text) ||
+            string.IsNullOrWhiteSpace(txtNewUserName.Text) ||
+            string.IsNullOrWhiteSpace(txtNewPassword.Text))
         {
-            DisplayAlert("Error!", "All fields must be filled out!", "OK");
+            lblErrorExistingPassword.Text = "All fields must be fileld out!";
+            lblErrorExistingPassword.IsVisible = true;
             return;
         }
 
         // Add the password
-        App.PasswordController.AddPassword(entryPlatformName.Text, entryPlatformUsername.Text, entryPassword.Text);
+        App.PasswordController.AddPassword(txtNewPlatform.Text, txtNewUserName.Text, txtNewPassword.Text);
         Navigation.PopAsync();
     }
 
     private void ButtonSubmitGenerated(object sender, EventArgs e)
     {
         //Called when the submit button for a Generated password is clicked.
-        if (string.IsNullOrWhiteSpace(entryPlatformName.Text) ||
-            string.IsNullOrWhiteSpace(entryPlatformUsername.Text) ||
+        if (string.IsNullOrWhiteSpace(txtNewPlatform.Text) ||
+            string.IsNullOrWhiteSpace(txtNewUserName.Text) ||
             !_generatedPassword)
         {
-            DisplayAlert("Error", "Platform name, username, and a password are required.", "OK");
+            lblErrorGeneratedPassword.Text = "Platform name, usernmae, and a good secure password are required.";
+            lblErrorGeneratedPassword.IsVisible = true;
             return;
         }
-        App.PasswordController.AddPassword(entryPlatformName.Text, entryPlatformUsername.Text, entryPassword.Text);
+        App.PasswordController.AddPassword(txtNewPlatform.Text, txtNewUserName.Text, lblGenPassword.Text);
         Navigation.PopAsync();
     }
 
@@ -65,7 +67,7 @@ public partial class AddPasswordView : ContentPage
 
         // display the password
 
-        entryPassword.Text = generatedPassword;
+        lblGenPassword.Text = generatedPassword;
         _generatedPassword = true;
     }
 }
